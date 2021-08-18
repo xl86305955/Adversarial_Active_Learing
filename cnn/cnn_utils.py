@@ -302,30 +302,6 @@ def train(X_train, Y_train, X_val, Y_val, DATASET, num_epochs=50, batch_size=128
     for layer in layers:
         model.add(layer)
 
-    #model = Sequential()
-    #
-    #model.add(Conv2D(params[0], (3, 3),
-    #                        input_shape=X_train.shape[1:]))
-    #model.add(Activation('relu'))
-    #model.add(Conv2D(params[1], (3, 3)))
-    #model.add(Activation('relu'))
-    #model.add(MaxPooling2D(pool_size=(2, 2)))
-
-    #model.add(Conv2D(params[2], (3, 3)))
-    #model.add(Activation('relu'))
-    #model.add(Conv2D(params[3], (3, 3)))
-    #model.add(Activation('relu'))
-    #model.add(MaxPooling2D(pool_size=(2, 2)))
-
-    #model.add(Flatten())
-    #model.add(Dense(params[4]))
-    #model.add(Activation('relu'))
-    #model.add(Dropout(0.5))
-    #model.add(Dense(params[5]))
-    #model.add(Activation('relu'))
-    #model.add(Dense(10))
-    
-
     def fn(correct, predicted):
         return tf.nn.softmax_cross_entropy_with_logits(labels=correct,
                                                        logits=predicted/train_temp)
@@ -468,51 +444,14 @@ def cnn_gen_adv(X_train, Y_train, ATTACK, DATASET, image_size, num_channels, nb_
         adv_x = pgd.generate(x, **pgd_params)                         
 
     X_adv = sess.run(adv_x, feed_dict={x: X_train})                            
-    #print ' X_adv shape' , X_adv.shape
-    #print ' X_train shape' , X_train.shape
 
     confidence_score = model_wrap.get_probs(X_adv)
     confidence_score = sess.run(confidence_score, feed_dict={x:X_adv})
-    #print 'Confidence score: ' , confidence_score
-
-    #conf_avg=0
-    #for i in range(len(confidence_score)):
-    #    if confidence_score[i][0] >= confidence_score[i][1]:
-    #        conf_avg = conf_avg + confidence_score[i][0]
-    #    else:
-    #        conf_avg = conf_avg + confidence_score[i][1]
-    #conf_avg = conf_avg / len(confidence_score)
-    #print 'Average confidence score: ' , conf_avg
     
     sess.close()
     del sess
 
     return X_adv, confidence_score
-
-def valid_list(confidence_score):
-    valid = np.arange(confidence_score.shape[0])
-    #threshhold = 0
-    #valid = []
-    #for i in range(confidence_score.shape[0]):
-    #    if(np.max(confidence_score[i]) >= threshhold):
-    #        valid.append(i)
-    print 'Num valid:', len(valid)
-    #valid = np.array(valid)
-
-    return valid
-
-def prune_sample(X_adv, Xsub_train, Ysub_train, size, valid):
-    idx = np.random.choice(valid, size, replace=False)
-    rand_idx = np.random.choice(np.arange(Ysub_train.shape[0]), size, replace=False) 
-
-    X_padv = X_adv[idx] 
-    Y_padv = Ysub_train[idx]
-    X_pcln = Xsub_train[idx]
-    Y_pcln = Ysub_train[idx]
-    X_rand = Xsub_train[rand_idx]
-    Y_rand = Ysub_train[rand_idx]
-
-    return X_padv, Y_padv, X_pcln, Y_pcln, X_rand, Y_rand
 
 # Return the sorted argument list with min perturbation
 def sort_perturb(x, x_adv):

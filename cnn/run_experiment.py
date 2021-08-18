@@ -66,7 +66,6 @@ def cbadv_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val, Xsub_trai
         X_adv_fgsm = np.vstack((X_adv_fgsm, x_adv))
         confidence_score = np.vstack((confidence_score, cf_score))
         idx = idx + batch_adv
-    valid = valid_list(confidence_score)   
     Y_adv_fgsm = Ysub_train
 
     x_fgsm_at = np.concatenate((X_adv_fgsm, Xsub_train)) 
@@ -121,7 +120,6 @@ def cbadv_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val, Xsub_trai
         X_adv_pgd = np.vstack((X_adv_pgd, x_adv))
         confidence_score = np.vstack((confidence_score, cf_score))
         idx = idx + batch_adv
-    valid = valid_list(confidence_score)   
     Y_adv_pgd = Ysub_train
 
     x_pgd_at = np.concatenate((X_adv_pgd, Xsub_train)) 
@@ -177,7 +175,6 @@ def cbadv_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val, Xsub_trai
         X_adv_deepfool = np.vstack((X_adv_deepfool, x_adv))
         confidence_score = np.vstack((confidence_score, cf_score))
         idx = idx + batch_adv
-    valid = valid_list(confidence_score)   
     Y_adv_deepfool = Ysub_train
    
     x_deepfool_at = np.concatenate((X_adv_deepfool, Xsub_train)) 
@@ -232,7 +229,6 @@ def cbadv_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val, Xsub_trai
         X_adv_cw = np.vstack((X_adv_cw, x_adv))
         confidence_score = np.vstack((confidence_score, cf_score))
         idx = idx + batch_adv
-    valid = valid_list(confidence_score)   
     Y_adv_cw = Ysub_train
     
     x_cw_at = np.concatenate((X_adv_cw, Xsub_train)) 

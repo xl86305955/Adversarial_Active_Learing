@@ -481,19 +481,17 @@ if __name__ == "__main__":
 
     if TASK == 'nl':
         # Run all experiments together included cln at aug
-        acc = cbadv_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val, Xsub_train, Xsub_test, Ysub_train, Ysub_test, ep)
+        print 'Start CNN Experiment'
+        nl_acc = cbadv_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val, Xsub_train, Xsub_test, Ysub_train, Ysub_test, ep)
         data_folder = "./cnn_results/"
-        f_name = data_folder+'acc'
-        np.save(f_name, acc)
+        f_name = data_folder+'nl_acc'
+        np.save(f_name, nl_acc)
     else:
         # Active Learning experiments
         print 'Start Active Learning Experiments'
-        acc_all = iter_al_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val,
+        al_acc = iter_al_cnn(DATASET, X_train, X_test, X_val, Y_train, Y_test, Y_val,
                           Xsub_train, Xsub_test, Ysub_train, Ysub_test, ep)
         
-        print 'Random', acc_all[0]
-        print 'Min pert', acc_all[1]
-        print 'Min pert e3', acc_all[2]
-        print 'Min pert e2', acc_all[3]
-        print 'Min pert e1', acc_all[4]
-        print 'Max conf', acc_all[5]
+        data_folder = "./cnn_results/"
+        f_name = data_folder+'al_acc'
+        np.save(f_name, al_acc)

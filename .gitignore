@@ -6,4 +6,3 @@ knn/*.pyc
 knn/cleverhans
 knn/hopcroftkarp
 knn/MNIST_data
-knn/results
